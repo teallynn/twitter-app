@@ -58,8 +58,12 @@ app.get('/', (req, res) => {
   const friends = req.friends;
   const messages = req.messages;
   const messages_sent = req.messages_sent;
-
-  
-
   res.render('layout', { user, timeline, friends, messages, moment });
+});
+
+app.post('/', (req, res) => {
+  twitterAPI.post('statuses/update', { status: req.body.tweet }, function(err, data, response) {
+    console.log('You tweeted!');
+  });
+  res.redirect('/');
 });
