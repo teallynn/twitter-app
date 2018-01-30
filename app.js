@@ -1,5 +1,6 @@
 const express = require('express');
 const Twit = require('twit');
+const moment = require('moment');
 const bodyParser = require('body-parser');
 const config = require('./config.js');
 
@@ -8,8 +9,6 @@ const app = express();
 app.set('view engine', 'pug');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
-
-
 
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'));
@@ -40,7 +39,7 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  twitterAPI.get('direct_messages/events/list', { count: 5 }, function (err, data, response) {
+  twitterAPI.get('direct_messages', { count: 5 }, function (err, data, response) {
     req.messages = data;
     next();
   });
@@ -58,5 +57,9 @@ app.get('/', (req, res) => {
   const timeline = req.timeline;
   const friends = req.friends;
   const messages = req.messages;
-  res.render('layout', { user, timeline, friends, messages });
+  const messages_sent = req.messages_sent;
+
+  
+
+  res.render('layout', { user, timeline, friends, messages, moment });
 });

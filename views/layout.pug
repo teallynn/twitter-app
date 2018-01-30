@@ -7,6 +7,21 @@ html(lang="en")
     meta(name='author' content='Teal Larsen')
     meta(name='viewport' content='width=device-width, initial-scale=1')
     link(href='https://fonts.googleapis.com/css?family=Work+Sans:400,600' rel='stylesheet' type='text/css')
-    link(rel='stylesheet' href='/static/stylesheets/global.css')
+    link(rel='stylesheet' href='/stylesheets/global.css')
   body
     include includes/header.pug
+    .bounds.app--body
+      .app--section--header
+        .grid-33
+          .app--section--heading
+            h2 Timeline
+        .grid-33
+          .app--section--heading
+            strong #{user.friends_count}
+            h2 Following
+        .grid-33
+          .app--section--heading
+            h2 Direct Messages
+        include includes/tweets.pug
+        include includes/friends.pug
+        include includes/messages.pug

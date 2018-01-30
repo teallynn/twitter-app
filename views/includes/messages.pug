@@ -1,29 +1,14 @@
-.bounds.app--body
-  .app--section--header.grid-33
-    .app--section--heading
-      h2 Direct Messages
-      .grid-33
-        .app--section
-          ul.app--message--list
-            li
-              h3
-                | Conversation with
-                a Jill Spore
-              |
-              ul.app--message--conversation
-                li.app--message
-                  .app--avatar(style='background-image: url(images/f-spore.png)')
-                    img(src='images/f-spore.png')
-                  |
-                  p.app--message--text How are things?
-                  |
-                  p.app--message--timestamp 3 hours ago
-                |
-                li.app--message--me
-                  .app--avatar(style='background-image: url(images/m-spore.png)')
-                    img(src='images/m-spore.png')
-                  |
-                  p.app--message--text
-                    | Great! How about you? Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  |
-                  p.app--message--timestamp 2 hours ago
+.grid-33
+  .app--section
+    ul.app--message--list
+      li
+        h3
+          Conversation with
+            a #{messages[0].sender.name}
+        ul.app--message--conversation
+          each message in messages
+            li.app--message
+              .app--avatar(style='background-image: url(' + message.sender.profile_image_url + ')')
+                img(src=message.sender.profile_image_url)
+              p.app--message--text #{message.text}
+              p.app--message--timestamp=moment(message.created_at, 'ddd MMM DD HH:mm:ss Z YYYY').format('h:m')
