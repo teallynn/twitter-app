@@ -55,10 +55,10 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   twitterAPI.get('account/verify_credentials', { skip_status: true }, function(err, data, response) {
     req.user = data;
+    console.log(data);
     next();
   });
 });
-
 
 /*****************************Root GET route**********************************/
 app.get('/', (req, res) => {
@@ -67,7 +67,8 @@ app.get('/', (req, res) => {
   const friends = req.friends;
   const messages = req.messages;
   const messages_sent = req.messages_sent;
-  res.render('layout', { user, timeline, friends, messages, moment });
+  const background = req.background;
+  res.render('layout', { user, timeline, friends, messages, background, moment });
 });
 
 
