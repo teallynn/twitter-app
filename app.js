@@ -35,7 +35,7 @@ app.use((req, res, next) => {
   });
 });
 
-//Get the 5 most trecent friends
+//Get the 5 most recent friends
 app.use((req, res, next) => {
   twitterAPI.get('friends/list', { count: 5 }, function (err, data, response) {
     req.friends = data;
@@ -70,10 +70,21 @@ app.get('/', (req, res) => {
   res.render('layout', { user, timeline, friends, messages, moment });
 });
 
-/**********************Root POST route to send a tweet************************/
+
 app.post('/', (req, res) => {
   twitterAPI.post('statuses/update', { status: req.body.tweet }, function(err, data, response) {
     console.log('You tweeted!');
   });
   res.redirect('/');
+});
+
+app.use((req, res, next) => {
+  const err = new Error("Hmm... something went wrong.");
+  err.status = 404;
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  res.locals.error = err;
+  res.render('error_page', err);
 });
